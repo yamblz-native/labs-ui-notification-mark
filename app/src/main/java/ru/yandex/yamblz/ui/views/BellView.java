@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -37,7 +38,7 @@ public class BellView extends FrameLayout {
     ImageView imgHalf;
 
     private boolean shown = false;
-//    private final MediaPlayer mp = MediaPlayer.create(this, R.raw.soho);
+    private final MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.sound);
 
     public BellView(Context context) {
         super(context);
@@ -62,7 +63,9 @@ public class BellView extends FrameLayout {
     public void animateEvents(int events) {
         shown = true;
         txtCount.setText(Integer.toString(events));
-
+        mp.start();
+        Vibrator v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(500);
         imgBell.setPivotX(imgBell.getWidth()/2);
         imgBell.setPivotY(0);
         AnimatorSet half1;
